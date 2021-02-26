@@ -1,0 +1,19 @@
+name: 'Bumpup'
+description: 'Bumpup'
+author: 'Daniel Richter'
+inputs:
+  version:
+    description: 'The version of bumpup to use'
+    required: false
+  cwd:
+    description: 'The working directory'
+    required: false
+  args:
+    description: 'args to pass to bumpup'
+    required: false
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'package'
+  color: 'orange'
