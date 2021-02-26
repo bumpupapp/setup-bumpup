@@ -1,0 +1,13 @@
+name: 'setup-bumpup'
+description: 'setup bumpup for your workflow'
+author: 'Daniel Richter'
+inputs:
+  version:
+    description: 'The version of bumpup to use'
+    required: false
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'package'
+  color: 'orange'
