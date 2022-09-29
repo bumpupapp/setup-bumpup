@@ -4,7 +4,7 @@
         with:
           deno-version: ${{matrix.deno}}
   - name: setup bumpup
-    uses: danielr1996/gh-actions-bumpup@v1
+    uses: danielr1996/gh-actions-bumpup@v2
   - name: version
     run: bumpup
 ```
