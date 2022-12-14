@@ -6705,16 +6705,12 @@ const exec = __nccwpck_require__(1514);
 const tc = __nccwpck_require__(7784);
 
 const version = core.getInput('version', {required: false}) || '';
-const arch = core.getInput('arch')
-const args = core.getInput('args', {required: false}) || '';
-const cwd = core.getInput('cwd', {required: false}) || '.';
 
 (async () => {
     try {
         let toolPath = tc.find("bumpup", version)
         if (!toolPath) {
-
-            const baseUrl = `https://packages.danielr1996.de/@bumpup/cli@${version}`
+            const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version !== '' ? `@` :''}${version}`
             let platformUrl
             if (process.platform === 'win32') {
                 platformUrl = '/bumpup.exe'
