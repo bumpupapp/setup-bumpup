@@ -4,10 +4,10 @@ import * as tc from '@actions/tool-cache'
 
 (async()=>{
     try {
-        const version = core.getInput('version', {required: false}) || '';
+        const version = core.getInput('version', {required: false});
         let toolPath = tc.find("bumpup", version)
         if (!toolPath) {
-            const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version !== '' ? `@` : ''}${version}`
+            const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version === 'latest' ? `` : `@${version}`}`
             let platformUrl
             if (process.platform === 'win32') {
                 platformUrl = '/bumpup.exe'
