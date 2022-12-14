@@ -6571,9 +6571,9 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(2186));
 const exec = __importStar(__nccwpck_require__(1514));
 const tc = __importStar(__nccwpck_require__(7784));
-const version = core.getInput('version', { required: false }) || '';
 (async () => {
     try {
+        const version = core.getInput('version', { required: false }) || '';
         let toolPath = tc.find("bumpup", version);
         if (!toolPath) {
             const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version !== '' ? `@` : ''}${version}`;

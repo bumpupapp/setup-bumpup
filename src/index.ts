@@ -2,9 +2,9 @@ import * as core from '@actions/core'
 import * as exec from '@actions/exec'
 import * as tc from '@actions/tool-cache'
 
-const version = core.getInput('version', {required: false}) || '';
 (async()=>{
     try {
+        const version = core.getInput('version', {required: false}) || '';
         let toolPath = tc.find("bumpup", version)
         if (!toolPath) {
             const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version !== '' ? `@` : ''}${version}`
