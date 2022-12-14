@@ -1,14 +1,40 @@
 const core = require('@actions/core');
 const exec = require('@actions/exec');
+const tc = require('@actions/tool-cache');
 
-const version = core.getInput('version', {required: false}) || 'main';
+const version = core.getInput('version', {required: false}) || '';
+const arch = core.getInput('arch')
 const args = core.getInput('args', {required: false}) || '';
 const cwd = core.getInput('cwd', {required: false}) || '.';
 
 (async () => {
     try {
-        await exec.exec(`deno install -n bumpup --root . --allow-all https://raw.githubusercontent.com/bumpupapp/cli/${version}/mod.ts`)
-        core.addPath(process.cwd()+'/bin');
+        let toolPath = tc.find("bumpup", version)
+        if (!toolPath) {
+
+            const baseUrl = `https://packages.danielr1996.de/@bumpup/cli@${version}`
+            let platformUrl
+            if (process.platform === 'win32') {
+                platformUrl = '/bumpup.exe'
+            } else if (process.platform === 'linux') {
+                platformUrl = '/bumpup_linux_x68'
+            } else if (process.platform === 'darwin' && process.arch === 'x64') {
+                platformUrl = '/bumpup_darwin_x86'
+            } else if (process.platform === 'darwin' && process.arch === 'arm64') {
+                platformUrl = '/bumpup_darwin_aarch64'
+            }
+            const bumpupPath = await tc.downloadTool(baseUrl + platformUrl)
+            console.log(bumpupPath)
+            await exec("chmod", ["+x", kubectlPath], {silent: true})
+            toolPath = await tc.cacheFile(
+                bumpupPath,
+                "bumpup",
+                "bumpup",
+                version
+            )
+        }
+        console.log(toolPath)
+        core.addPath(toolPath)
     } catch (error) {
         core.setFailed(error.message);
     }
