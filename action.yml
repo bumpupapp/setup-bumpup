@@ -5,7 +5,7 @@ inputs:
   version:
     description: 'The version of bumpup to use'
     required: false
-    default: "1.0.0-beta.5"
+    default: latest
 runs:
   using: 'node16'
   main: 'dist/index.js'
