@@ -6539,6 +6539,73 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ 6144:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const core = __importStar(__nccwpck_require__(2186));
+const exec = __importStar(__nccwpck_require__(1514));
+const tc = __importStar(__nccwpck_require__(7784));
+const version = core.getInput('version', { required: false }) || '';
+(async () => {
+    try {
+        let toolPath = tc.find("bumpup", version);
+        if (!toolPath) {
+            const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version !== '' ? `@` : ''}${version}`;
+            let platformUrl;
+            if (process.platform === 'win32') {
+                platformUrl = '/bumpup.exe';
+            }
+            else if (process.platform === 'linux') {
+                platformUrl = '/bumpup_linux_x68';
+            }
+            else if (process.platform === 'darwin' && process.arch === 'x64') {
+                platformUrl = '/bumpup_darwin_x86';
+            }
+            else if (process.platform === 'darwin' && process.arch === 'arm64') {
+                platformUrl = '/bumpup_darwin_aarch64';
+            }
+            const bumpupPath = await tc.downloadTool(baseUrl + platformUrl);
+            console.log(bumpupPath);
+            await exec.exec("chmod", ["+x", bumpupPath], { silent: true });
+            toolPath = await tc.cacheFile(bumpupPath, "bumpup", "bumpup", version);
+        }
+        console.log(toolPath);
+        core.addPath(toolPath);
+    }
+    catch (error) {
+        core.setFailed(error.message);
+    }
+})();
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -6697,49 +6764,12 @@ module.exports = require("util");
 /******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-const core = __nccwpck_require__(2186);
-const exec = __nccwpck_require__(1514);
-const tc = __nccwpck_require__(7784);
-
-const version = core.getInput('version', {required: false}) || '';
-
-(async () => {
-    try {
-        let toolPath = tc.find("bumpup", version)
-        if (!toolPath) {
-            const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version !== '' ? `@` :''}${version}`
-            let platformUrl
-            if (process.platform === 'win32') {
-                platformUrl = '/bumpup.exe'
-            } else if (process.platform === 'linux') {
-                platformUrl = '/bumpup_linux_x68'
-            } else if (process.platform === 'darwin' && process.arch === 'x64') {
-                platformUrl = '/bumpup_darwin_x86'
-            } else if (process.platform === 'darwin' && process.arch === 'arm64') {
-                platformUrl = '/bumpup_darwin_aarch64'
-            }
-            const bumpupPath = await tc.downloadTool(baseUrl + platformUrl)
-            console.log(bumpupPath)
-            await exec("chmod", ["+x", kubectlPath], {silent: true})
-            toolPath = await tc.cacheFile(
-                bumpupPath,
-                "bumpup",
-                "bumpup",
-                version
-            )
-        }
-        console.log(toolPath)
-        core.addPath(toolPath)
-    } catch (error) {
-        core.setFailed(error.message);
-    }
-})();
-
-})();
-
-module.exports = __webpack_exports__;
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(6144);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
 /******/ })()
 ;
