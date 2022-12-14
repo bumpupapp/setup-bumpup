@@ -21,6 +21,7 @@
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
     "@actions/tool-cache": "^2.0.1",
+    "@types/node": "^18.11.15",
     "@vercel/ncc": "^0.34.0"
   }
 }
