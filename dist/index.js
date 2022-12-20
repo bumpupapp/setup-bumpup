@@ -6575,7 +6575,7 @@ const tc = __importStar(__nccwpck_require__(7784));
     try {
         const version = core.getInput('version', { required: false });
         let toolPath = tc.find("bumpup", version);
-        if (!toolPath) {
+        if (!toolPath || version === 'latest') {
             const baseUrl = `https://packages.danielr1996.de/@bumpup/cli${version === 'latest' ? `` : `@${version}`}`;
             let platformUrl;
             if (process.platform === 'win32') {
